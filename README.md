@@ -180,6 +180,19 @@ Installing Kubernetes directly on WSL-2 can be complex, but we can manage Kubern
 [HOGWILD!](https://arxiv.org/abs/1106.5730)
 
 ## Configurations and setup
+
+First step - download two files from http://www.ai.mit.edu/projects/jmlr/papers/volume5/lewis04a/lyrl2004_rcv1v2_README.htm
+
+1. rcv1-v2.topics.qrels.gz
+2. lyrl2004_vectors_train.dat.gz 
+3. lyrl2004_vectors_test_pt0.dat
+4. lyrl2004_vectors_test_pt1.dat
+5. lyrl2004_vectors_test_pt2.dat
+6. lyrl2004_vectors_test_pt3.dat
+
+After downloading, extract both files in the /resources/rcv1 folder. If folder does not exist, make it.
+
+
 To build the python environment and activate it run: 
 ```bash
 bash bootstrap-python-env.sh
