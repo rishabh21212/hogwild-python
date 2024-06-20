@@ -27,45 +27,6 @@ Follow the official guide from Microsoft to install WSL-2:
    Ensure the installed distribution is set to version 2.
 
 
-# Installing Python 3.6.3 on WSL 2
-
-## Step 1: Update and Upgrade
-First, update and upgrade your package lists to ensure you have the latest versions.
-
-```bash
-sudo apt update
-sudo apt upgrade
-```
-## Step 2: Install Dependencies
-Python 3.6.3 may require some dependencies to be installed. Run the following command to install them:
-```bash
-sudo apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev wget
-```
-
-## Step 3: Download Python 3.6.3 Source Code
-Navigate to the directory where you want to download Python 3.6.3 source code (e.g., your home directory):
-```bash
-cd ~
-wget https://www.python.org/ftp/python/3.6.3/Python-3.6.3.tgz
-```
-
-## Step 4: Extract and Compile Python
-Extract the downloaded archive and compile Python from source:
-```bash
-tar -xzvf Python-3.6.3.tgz
-cd Python-3.6.3
-./configure --enable-optimizations
-make -j$(nproc)
-sudo make altinstall
-```
-
-## Step 5: Verify Installation
-Check that Python 3.6.3 has been installed correctly:
-```bash
-python3.6 --version
-```
-
-
 ## 2. Install Docker Desktop and Enable WSL-2 and Kubernetes
 
 1. Download Docker Desktop:
