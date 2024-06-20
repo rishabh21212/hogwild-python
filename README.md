@@ -216,6 +216,8 @@ and it will spin 4 workers in our local machine.
 
 ##### To run in the cluster:
 ```bash
+minikube start
+
 bash run.sh -n 3 -r synchronous -w cluster
 ```
 and it will spin 3 workers in Kubernetes cluster. Don't forget the change the variables `KUBER_LOGIN` and docker hub user / password inside the script before to run. 
