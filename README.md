@@ -107,6 +107,37 @@ Installing Kubernetes directly on WSL-2 can be complex, but we can manage Kubern
      curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
      sudo install minikube-linux-amd64 /usr/local/bin/minikube
      ```
+     
+Add Your User to the docker Group:
+
+Open a terminal window on your Ubuntu system.
+
+Run the following command to add your current user to the docker group:
+
+```bash
+sudo usermod -aG docker $USER
+```
+
+This command modifies your user account ($USER) and adds it to the docker group, which allows your user to execute Docker commands without needing to use sudo.
+
+Activate the Group Membership:
+
+After adding your user to the docker group, the changes will not take effect immediately in your current shell session. You need to either log out and log back in again or use the following command to activate the changes without logging out:
+
+```bash
+newgrp docker
+```
+
+This command activates the new group membership (docker group) in your current shell session.
+
+Verify Docker Access:
+
+To verify that you can now run Docker commands without sudo, you can check Docker's version:
+```bash
+docker version
+```
+If you see Docker's version information without any permission errors, then your user has been successfully added to the docker group.
+
 
 2. Start Minikube:
    - Start Minikube with the Docker driver:
