@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 APP_NAME=hogwild
-REPO=liabifano
+REPO=rishabhluna
 KUBER_LOGIN=cs449g9
 
 DATA_PATH=/data/datasets
@@ -21,7 +21,6 @@ then
     bash run-local.sh -r $RUNNING_MODE
     exit 0
 fi;
-
 
 function shutdown_infra {
     if ! [[ -z $(kubectl get services | grep coordinator-service) ]];
@@ -48,11 +47,12 @@ echo
 echo "----- Deleting remaining infra -----"
 shutdown_infra
 
-#echo
-#echo "----- Building and Pushing docker to Docker Hub -----"
-docker build -f `pwd`/Docker/Dockerfile `pwd` -t ${REPO}/${APP_NAME}
-docker push ${REPO}/${APP_NAME}
-
+echo
+echo "----- Building and Pushing docker to Docker Hub -----"
+docker build -f `pwd`/Docker/Dockerfile `pwd` -t ${REPO}/${APP_NAME}:latest
+docker tag ${REPO}/${APP_NAME}:latest ${REPO}/${APP_NAME}:0.0.1
+docker push ${REPO}/${APP_NAME}:latest
+docker push ${REPO}/${APP_NAME}:0.0.1
 
 echo
 echo "----- Starting workers -----"
@@ -63,19 +63,16 @@ kubectl create configmap hogwild-config --from-literal=replicas=${N_WORKERS} \
 sed "s/\(replicas:\)\(.*\)/\1 ${N_WORKERS}/" Kubernetes/workers_template.yaml > Kubernetes/workers.yaml
 kubectl create -f Kubernetes/workers.yaml
 
-
 while [ $(kubectl get pods | grep worker | grep Running | wc -l) != ${N_WORKERS} ]
 do
     sleep 40
     kubectl get pods | grep worker | grep -v Running | awk '{print $1}' | xargs kubectl delete pods
 done
 
-
 echo
 echo
 echo "----- Workers are up and running, starting coordinator -----"
 kubectl create -f Kubernetes/coordinator.yaml
-
 
 while [ $(kubectl get pods | grep coordinator | grep Running | wc -l) == 0 ]
 do
@@ -85,7 +82,6 @@ done
 echo
 echo "----- Running Job -----"
 
-
 MY_TIME="`date +%Y%m%d%H%M%S`" && kubectl cp coordinator-0:log.json logs/log_${MY_TIME}.json 2> /dev/null
 while [ $? -ne 0 ];
 do
@@ -93,11 +89,8 @@ do
     MY_TIME="`date +%Y%m%d%H%M%S`" && kubectl cp coordinator-0:log.json logs/log_${MY_TIME}.json 2> /dev/null
 done
 
-
-
 echo
 echo "----- Job Completed, writing log in logs/log_${MY_TIME}.json -----"
-
 
 echo
 echo "----- Shutting down infra -----"

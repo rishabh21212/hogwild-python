@@ -221,3 +221,24 @@ minikube start
 bash run.sh -n 3 -r synchronous -w cluster
 ```
 and it will spin 3 workers in Kubernetes cluster. Don't forget the change the variables `KUBER_LOGIN` and docker hub user / password inside the script before to run. 
+
+# Kubernetes Deployment Check
+
+To check the details of your Kubernetes deployment, you can use several `kubectl` commands. These commands will help you inspect the current state of your Kubernetes resources, such as pods, services, and deployments.
+Please google each command to understand them.
+
+## Check Pods
+To see the status of your pods, use:
+```bash
+kubectl get pods
+kubectl describe pod <pod-name>
+kubectl get services
+kubectl describe service <service-name>
+kubectl get configmaps
+kubectl describe configmap <configmap-name>
+kubectl get statefulsets
+kubectl describe statefulset <statefulset-name>
+kubectl logs <pod-name>
+kubectl logs -f <pod-name>
+kubectl get events
+```
